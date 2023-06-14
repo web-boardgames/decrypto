@@ -1,46 +1,28 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
+import { useRouter } from "next/navigation";
 import styled from "@emotion/styled";
-import { gsap } from "gsap";
-import SplitType from "split-type";
+import Title from "@/components/rendering-page/Title";
 
 export default function Home() {
-  const [name, setName] = useState("");
-  const titleRef = useRef<HTMLDivElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
-  useEffect(() => {
-    if (titleRef.current) {
-      titleRef.current.style.opacity = "1";
-      const chars = new SplitType(titleRef.current).chars;
-
-      chars?.map((char) => {
-        gsap.fromTo(
-          char,
-          {
-            opacity: 0,
-          },
-          {
-            delay: Math.random(),
-            opacity: 1,
-            duration: 0.01,
-            repeat: -1,
-            repeatDelay: 0.5 + Math.random(),
-            yoyo: true,
-          }
-        );
-      });
+  const onEnterRoom = () => {
+    if (nameRef.current) {
+      const name = nameRef.current.value;
+      if (name) {
+        localStorage.setItem("name", name);
+        router.push(`/lobby`);
+      }
     }
-  }, []);
+  };
 
   return (
     <Container>
-      <Title ref={titleRef}>Decrypto</Title>
-      <NameInput
-        placeholder="Enter name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <Button>Enter</Button>
+      <Title />
+      <NameInput placeholder="Enter name" ref={nameRef} />
+      <Button onClick={onEnterRoom}>Enter</Button>
     </Container>
   );
 }
@@ -54,14 +36,6 @@ const Container = styled.main`
   align-items: center;
   flex-direction: column;
   gap: 2rem;
-`;
-
-const Title = styled.div`
-  font-size: 4rem;
-  font-weight: 900;
-  text-align: center;
-  color: #49a732;
-  opacity: 0;
 `;
 
 const NameInput = styled.input`
@@ -83,4 +57,7 @@ const Button = styled.button`
   color: white;
 
   cursor: pointer;
+  &:hover {
+    background-color: #49a732;
+  }
 `;
