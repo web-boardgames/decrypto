@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { FormEvent, useRef } from "react";
 import { useRouter } from "next/navigation";
 import styled from "@emotion/styled";
 import Title from "@/components/rendering-page/Title";
@@ -8,7 +8,8 @@ export default function Home() {
   const nameRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const onEnterRoom = () => {
+  const onEnterRoom = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (nameRef.current) {
       const name = nameRef.current.value;
       if (name) {
@@ -21,8 +22,10 @@ export default function Home() {
   return (
     <Container>
       <Title />
-      <NameInput placeholder="Enter name" ref={nameRef} />
-      <Button onClick={onEnterRoom}>Enter</Button>
+      <Form onSubmit={onEnterRoom}>
+        <NameInput placeholder="Enter name" ref={nameRef} />
+        <Button type="submit">Enter</Button>
+      </Form>
     </Container>
   );
 }
@@ -35,7 +38,6 @@ const Container = styled.main`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 2rem;
 `;
 
 const NameInput = styled.input`
@@ -60,4 +62,11 @@ const Button = styled.button`
   &:hover {
     background-color: #49a732;
   }
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 `;
