@@ -5,6 +5,7 @@ import { onValue, ref } from "firebase/database";
 import Navigation from "@/components/common/Navigation";
 import db from "@/config/firebase";
 import Room from "@/components/lobby/Room";
+import CreateRoom from "@/components/lobby/CreateRoom";
 
 export default function Home() {
   const dbRef = ref(db, "/");
@@ -25,16 +26,19 @@ export default function Home() {
   return (
     <Container>
       <Navigation />
-      <RoomsContainer>
-        {rooms.map((room) => (
-          <Room key={room} id={room} />
-        ))}
-      </RoomsContainer>
+      <Main>
+        <CreateRoom />
+        <RoomsContainer>
+          {rooms.map((room) => (
+            <Room key={room} id={room} />
+          ))}
+        </RoomsContainer>
+      </Main>
     </Container>
   );
 }
 
-const Container = styled.main`
+const Container = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: #071404;
@@ -45,6 +49,14 @@ const RoomsContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  margin: 2rem;
+  gap: 2rem;
+`;
+
+const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
   gap: 2rem;
 `;
