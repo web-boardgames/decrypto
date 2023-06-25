@@ -6,6 +6,7 @@ import { Modal } from "@mui/joy";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
 import { useLobby } from "@/hooks/useLobby";
+import { DefaultButton } from "../common/DefaultButton";
 
 export default function CreateRoom() {
   const router = useRouter();
@@ -42,7 +43,9 @@ export default function CreateRoom() {
 
   return (
     <>
-      <Container onClick={() => setOpenForm(true)}>CreateRoom</Container>
+      <DefaultButton onClick={() => setOpenForm(true)}>
+        CreateRoom
+      </DefaultButton>
       <Modal
         open={openForm}
         onClose={() => setOpenForm(false)}
@@ -84,28 +87,12 @@ export default function CreateRoom() {
               </FormButton>
             </ButtonContainer>
           </SingleLabel>
-          <FormButton type="submit">Create Room</FormButton>
+          <SubmitButton type="submit">Create Room</SubmitButton>
         </CreateRoomForm>
       </Modal>
     </>
   );
 }
-
-const Container = styled.button`
-  width: 12rem;
-  height: 5rem;
-  color: white;
-  background-color: #ffffff30;
-  display: flex;
-  font-size: 1.6rem;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #ffffff50;
-  }
-`;
 
 const CreateRoomForm = styled.form`
   position: relative;
@@ -139,26 +126,21 @@ const FormLabel = styled.label`
 const FormInput = styled.input`
   height: 3rem;
   background-color: #ffffff30;
-  border: none;
   padding: 0.4rem 1rem;
   font-size: 1.6rem;
   color: white;
   outline: none;
 `;
 
-const FormButton = styled.button`
+const FormButton = styled(DefaultButton)`
   height: 3rem;
-  background-color: #ffffff30;
-  border: none;
-  padding: 0.4rem 1rem;
-  font-size: 2rem;
-  color: white;
-  outline: none;
-  cursor: pointer;
+  width: 3rem;
+`;
 
-  &:hover {
-    background-color: #ffffff50;
-  }
+const SubmitButton = styled(DefaultButton)`
+  align-self: center;
+  font-size: 1.6rem;
+  width: 100%;
 `;
 
 const SingleLabel = styled.div`
