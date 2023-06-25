@@ -11,7 +11,7 @@ export const useRoom = () => {
   const roomKey = params.slug;
   const roomRef = ref(db, "/" + roomKey);
   const room = useRecoilValue(roomState);
-  const isCaptain = room?.captainUID === user.id;
+  const isCaptain = room?.captainID === user.id;
 
   const changeTeam = async () => {
     // await
