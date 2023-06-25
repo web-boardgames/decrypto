@@ -1,5 +1,6 @@
 "use client";
 
+import { UserGuard } from "@/components/common/UserGuard";
 import "@/styles/normalize.css";
 import localFont from "next/font/local";
 import { RecoilRoot } from "recoil";
@@ -17,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={neodgm.className}>
       <RecoilRoot>
-        <body>{children}</body>
+        <UserGuard>
+          <body>{children}</body>
+        </UserGuard>
       </RecoilRoot>
     </html>
   );
