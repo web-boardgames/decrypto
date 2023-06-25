@@ -1,12 +1,13 @@
 interface Team {
-  words: string[4];
-  submit_code: string[4];
-  hint: string[4][];
+  words: string[];
+  submit_code: number[];
+  hint: string[][];
   green_token: 0 | 1 | 2;
   red_token: 0 | 1 | 1;
 }
 
 export interface Room {
+  roomName: string;
   teamA: Team;
   teamB: Team;
   captainUID: string;

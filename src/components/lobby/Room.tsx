@@ -1,8 +1,13 @@
 import styled from "@emotion/styled";
 
-export default function Room({ id }: { id: string }) {
+export default function Room({
+  id,
+  maxPlayer,
+}: {
+  id: string;
+  maxPlayer: number;
+}) {
   const isPlaying = false;
-  const maxPeople = 6;
   const currentPeople = 2;
 
   return (
@@ -13,7 +18,7 @@ export default function Room({ id }: { id: string }) {
         {isPlaying ? "playing" : "waiting"}
       </PlayingContainer>
       <People>
-        {currentPeople} / {maxPeople}
+        {currentPeople} / {maxPlayer}
       </People>
     </Container>
   );

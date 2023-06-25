@@ -11,7 +11,7 @@ export default function Home() {
 
   useEffect(() => {
     onValue(dbRef, (snapshot) => {
-      console.log("snapshot", snapshot.val());
+      console.log("snapshot", snapshot.val().roomName);
     });
   }, []);
 

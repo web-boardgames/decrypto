@@ -7,16 +7,24 @@ import db from "@/config/firebase";
 import Room from "@/components/lobby/Room";
 import CreateRoom from "@/components/lobby/CreateRoom";
 
+type RoomData = {
+  name: string;
+  maxPlayer: number;
+};
+
 export default function Home() {
   const dbRef = ref(db, "/");
-  const [rooms, setRooms] = useState<string[]>([]);
+  const [rooms, setRooms] = useState<RoomData[]>([]);
 
   useEffect(() => {
     const unsubscribe = onValue(dbRef, (snapshot) => {
-      let tmpRooms: string[] = [];
+      let tmpRooms: RoomData[] = [];
       snapshot.forEach((childSnapshot) => {
-        const childData = childSnapshot.val();
-        tmpRooms.push(childData);
+        const roomData = {
+          name: childSnapshot.val().roomName as string,
+          maxPlayer: childSnapshot.val().max_player as number,
+        };
+        tmpRooms.push(roomData);
       });
       setRooms(tmpRooms);
     });
@@ -29,8 +37,8 @@ export default function Home() {
       <Main>
         <CreateRoom />
         <RoomsContainer>
-          {rooms.map((room) => (
-            <Room key={room} id={room} />
+          {rooms.map((room, index) => (
+            <Room key={index} id={room.name} maxPlayer={room.maxPlayer} />
           ))}
         </RoomsContainer>
       </Main>

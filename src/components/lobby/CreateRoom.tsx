@@ -1,4 +1,5 @@
 import db from "@/config/firebase";
+import { createRoom } from "@/utils/firebase/createRoom";
 import styled from "@emotion/styled";
 import CloseIcon from "@mui/icons-material/Close";
 import { Modal } from "@mui/joy";
@@ -11,13 +12,13 @@ export default function CreateRoom() {
   const dbRef = ref(db, "/");
 
   const [openForm, setOpenForm] = useState<boolean>(false);
-  const [maxPeople, setMaxPeople] = useState<number>(8);
+  const [maxPlayer, setMaxPlayer] = useState<number>(8);
   const [isValidRoomName, setIsValidRoomName] = useState<boolean>(true);
   const roomNameRef = useRef<HTMLInputElement>(null);
 
   const onCloseForm = useCallback(() => {
     setIsValidRoomName(true);
-    setMaxPeople(8);
+    setMaxPlayer(8);
     setOpenForm(false);
   }, []);
 
@@ -28,11 +29,17 @@ export default function CreateRoom() {
       return;
     }
 
-    const result = await push(dbRef, roomNameRef.current.value);
+    const roomData = createRoom({
+      roomName: roomNameRef.current.value,
+      maxPlayer: maxPlayer,
+      uid: "test",
+    });
+
+    const result = await push(dbRef, roomData);
 
     router.push("/room/" + result.key);
 
-    console.log("create room!!", roomNameRef.current?.value, maxPeople);
+    console.log("create room!!", roomNameRef.current?.value, maxPlayer);
     onCloseForm();
   };
 
@@ -63,17 +70,17 @@ export default function CreateRoom() {
             )}
           </SingleLabel>
           <SingleLabel>
-            <FormLabel htmlFor="maxPeople">Max People</FormLabel>
+            <FormLabel htmlFor="maxPlayer">Max People</FormLabel>
             <ButtonContainer>
               <FormButton
-                onClick={() => setMaxPeople(Math.max(maxPeople - 1, 4))}
+                onClick={() => setMaxPlayer(Math.max(maxPlayer - 1, 4))}
                 type="button"
               >
                 -
               </FormButton>
-              <FormInput type="number" id="maxPeople" value={maxPeople} />
+              <FormInput type="number" id="maxPlayer" value={maxPlayer} />
               <FormButton
-                onClick={() => setMaxPeople(Math.min(maxPeople + 1, 16))}
+                onClick={() => setMaxPlayer(Math.min(maxPlayer + 1, 16))}
                 type="button"
               >
                 +
