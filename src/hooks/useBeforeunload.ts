@@ -13,6 +13,7 @@ export const useBeforeUnLoad = (
   );
 
   useEffect(() => {
+    window.addEventListener("beforeunload", enableBeforeunload);
     return () => window.removeEventListener("beforeunload", enableBeforeunload);
   }, [enableBeforeunload]);
 };
