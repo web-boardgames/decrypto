@@ -1,38 +1,32 @@
-import { atom } from "recoil";
+import { AtomEffect, atom } from "recoil";
 
 // FIXME: type any
 
-const localStorageEffect =
+const store = typeof window !== "undefined" ? window.localStorage : null;
+
+const localStorageEffect: <T>(key: string) => AtomEffect<T> =
   (key: string) =>
-  ({
-    setSelf,
-    onSet,
-  }: {
-    setSelf: (value: any) => void;
-    onSet: (
-      callback: (newValue: any, oldValue: any, isReset: boolean) => void
-    ) => void;
-  }) => {
-    const savedValue = localStorage.getItem(key);
+  ({ setSelf, onSet }) => {
+    const savedValue = store?.getItem(key);
     if (savedValue != null) {
       setSelf(JSON.parse(savedValue));
     }
 
     onSet((newValue, _, isReset) => {
       isReset
-        ? localStorage.removeItem(key)
-        : localStorage.setItem(key, JSON.stringify(newValue));
+        ? store?.removeItem(key)
+        : store?.setItem(key, JSON.stringify(newValue));
     });
   };
 
-export const userIdState = atom<string>({
+export const userIdState = atom({
   key: "userIdState",
   default: "",
-  effects: [localStorageEffect("userId")],
+  effects: [localStorageEffect<string>("userId")],
 });
 
-export const userNameState = atom<string>({
+export const userNameState = atom({
   key: "userNameState",
   default: "",
-  effects: [localStorageEffect("userName")],
+  effects: [localStorageEffect<string>("userName")],
 });
