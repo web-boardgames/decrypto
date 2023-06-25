@@ -3,7 +3,7 @@ import { AtomEffect, atom } from "recoil";
 
 // FIXME: type any
 
-const store = isServer() ? window.localStorage : null;
+const store = isServer() ? null : window.localStorage;
 
 const localStorageEffect: <T>(key: string) => AtomEffect<T> =
   (key: string) =>
