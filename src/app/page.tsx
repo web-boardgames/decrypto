@@ -15,7 +15,7 @@ export default function Home() {
     if (nameRef.current) {
       const name = nameRef.current.value;
       if (name) {
-        user.setName(name);
+        user.setNickname(name);
         router.push(`/lobby`);
       }
     }

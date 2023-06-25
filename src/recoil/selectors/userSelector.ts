@@ -1,14 +1,14 @@
 import { selector } from "recoil";
-import { userIdState, userNameState } from "../atoms";
+import { userIdState, userNicknameState } from "../atoms";
 
 export const userSelector = selector({
   key: "userSelector",
   get: ({ get }) => {
     const id = get(userIdState);
-    const name = get(userNameState);
+    const nickname = get(userNicknameState);
     return {
       id,
-      name,
+      nickname,
     };
   },
 });

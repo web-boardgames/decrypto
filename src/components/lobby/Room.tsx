@@ -11,7 +11,7 @@ export default function Room({ roomData }: { roomData: RoomCardData }) {
 
   return (
     <Container onClick={onRoom}>
-      <Title>{roomData.name}</Title>
+      <Title>{roomData.roomName}</Title>
       <PlayingContainer>
         <IsPlaying isPlaying={roomData.isPlaying} />
         {roomData.isPlaying ? "playing" : "waiting"}
