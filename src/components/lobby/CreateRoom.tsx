@@ -29,7 +29,7 @@ export default function CreateRoom() {
       return;
     }
 
-    const roomData = createRoom({
+    const roomData = await createRoom({
       roomName: roomNameRef.current.value,
       maxPlayer: maxPlayer,
       uid: "test",
