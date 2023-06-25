@@ -1,9 +1,16 @@
 import { RoomCardData } from "@/types/room.interface";
 import styled from "@emotion/styled";
+import { useRouter } from "next/navigation";
 
 export default function Room({ roomData }: { roomData: RoomCardData }) {
+  const router = useRouter();
+
+  const onRoom = () => {
+    router.push("/room/" + roomData.key);
+  };
+
   return (
-    <Container>
+    <Container onClick={onRoom}>
       <Title>{roomData.name}</Title>
       <PlayingContainer>
         <IsPlaying isPlaying={roomData.isPlaying} />
@@ -16,7 +23,7 @@ export default function Room({ roomData }: { roomData: RoomCardData }) {
   );
 }
 
-const Container = styled.div`
+const Container = styled.button`
   width: 10rem;
   height: 10rem;
   position: relative;

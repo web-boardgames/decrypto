@@ -17,6 +17,7 @@ export default function Home() {
       let tmpRooms: RoomCardData[] = [];
       rooms.forEach((roomSnapshot) => {
         const roomData = {
+          key: roomSnapshot.key as string,
           name: roomSnapshot.val()?.roomName as string,
           maxPlayer: roomSnapshot.val()?.max_player as number,
           isPlaying: roomSnapshot.val()?.is_playing as boolean,
