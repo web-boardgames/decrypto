@@ -1,19 +1,8 @@
 "use client";
-import db from "@/config/firebase";
-import { onValue, ref, remove } from "firebase/database";
-import { useParams } from "next/navigation";
-import { useEffect } from "react";
+import { useRoom } from "@/hooks/useRoom";
 
 export default function Home() {
-  const params = useParams();
-  const roomKey = params.slug;
-  const dbRef = ref(db, "/" + roomKey);
+  const { room } = useRoom();
 
-  useEffect(() => {
-    onValue(dbRef, (snapshot) => {
-      console.log("snapshot", snapshot.val().roomName);
-    });
-  }, []);
-
-  return <div>adsfds</div>;
+  return <div>{JSON.stringify(room)}</div>;
 }

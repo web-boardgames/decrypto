@@ -1,14 +1,38 @@
-import { useRoom } from "@/hooks/useRoom";
-import { ReactNode } from "react";
+import db from "@/config/firebase";
+import { roomState } from "@/recoil/atoms/roomState";
+import { onValue, ref } from "firebase/database";
+import { useParams } from "next/navigation";
+import { ReactNode, useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
 
 export const RoomGuard = ({ children }: { children: ReactNode }) => {
-  const { isError, isLoading } = useRoom();
+  const setGame = useSetRecoilState(roomState);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  if (isLoading) {
+  const params = useParams();
+  const roomKey = params.slug;
+  const roomRef = ref(db, "/" + roomKey);
+
+  useEffect(() => {
+    const describe = onValue(roomRef, (snapshot) => {
+      if (snapshot.exists()) {
+        setGame(snapshot.val());
+      } else {
+        setError(true);
+      }
+      setLoading(false);
+    });
+    return () => {
+      describe();
+    };
+  }, []);
+
+  if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (isError) {
+  if (error) {
     return <div>Room not found</div>;
   }
 
