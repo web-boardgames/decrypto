@@ -1,16 +1,16 @@
-import db from "@/config/firebase";
+import { FormEvent, useCallback, useRef, useState } from "react";
 import { createRoom } from "@/utils/firebase/createRoom";
 import styled from "@emotion/styled";
 import CloseIcon from "@mui/icons-material/Close";
 import { Modal } from "@mui/joy";
-import { push, ref } from "firebase/database";
 import { useRouter } from "next/navigation";
-import { FormEvent, useCallback, useRef, useState } from "react";
+import { useUser } from "@/hooks/useUser";
+import { useLobby } from "@/hooks/useLobby";
 
 export default function CreateRoom() {
   const router = useRouter();
-  const dbRef = ref(db, "/");
-
+  const { user } = useUser();
+  const { pushRoom } = useLobby();
   const [openForm, setOpenForm] = useState<boolean>(false);
   const [maxPlayer, setMaxPlayer] = useState<number>(8);
   const [isValidRoomName, setIsValidRoomName] = useState<boolean>(true);
@@ -32,15 +32,11 @@ export default function CreateRoom() {
     const roomData = await createRoom({
       roomName: roomNameRef.current.value,
       maxPlayer: maxPlayer,
-      uid: "test",
-      nickname: "test",
+      id: user.id,
+      nickname: user.id,
     });
-
-    const result = await push(dbRef, roomData);
-
+    const result = await pushRoom(roomData);
     router.push("/room/" + result.key);
-
-    console.log("create room!!", roomNameRef.current?.value, maxPlayer);
     onCloseForm();
   };
 
@@ -95,7 +91,7 @@ export default function CreateRoom() {
   );
 }
 
-const Container = styled.div`
+const Container = styled.button`
   width: 12rem;
   height: 5rem;
   color: white;

@@ -6,12 +6,12 @@ import { getRandomNumbers } from "../getRandomNumbers";
 export const createRoom = async ({
   roomName,
   maxPlayer,
-  uid,
+  id,
   nickname,
 }: {
   roomName: string;
   maxPlayer: number;
-  uid: string;
+  id: string;
   nickname: string;
 }) => {
   const words = (await getDoc(doc(fireStore, "korean_words", "nouns"))).data()
@@ -25,23 +25,23 @@ export const createRoom = async ({
   return {
     roomName,
     teamA: {
-      player: [{ uid, nickname }],
+      player: [{ id, nickname }],
       word: [...wordList.slice(0, 4)],
       submit_code: [1, 2, 3],
       hint: [],
-      green_token: 0,
-      red_token: 0,
+      green_token: 0 as const,
+      red_token: 0 as const,
     },
     teamB: {
       player: [],
       word: [...wordList.slice(4, 8)],
       submit_code: [1, 2, 3],
       hint: [],
-      green_token: 0,
-      red_token: 0,
+      green_token: 0 as const,
+      red_token: 0 as const,
     },
     max_player: maxPlayer,
-    captainUID: uid,
+    captainID: id,
     isPlaying: false,
     answer_code: [],
     round: 0,
