@@ -1,25 +1,30 @@
 import { Room } from "@/types/room.interface";
 
+// TODO: replace test to real data
 export const createRoom = ({
   roomName,
   maxPlayer,
   uid,
+  nickname,
 }: {
   roomName: string;
   maxPlayer: number;
   uid: string;
+  nickname: string;
 }): Room => {
   return {
     roomName,
     teamA: {
-      words: ["test", "test", "test", "test"],
+      player: [{ uid, nickname }],
+      word: ["test", "test", "test", "test"],
       submit_code: [1, 2, 3],
       hint: [],
       green_token: 0,
       red_token: 0,
     },
     teamB: {
-      words: ["test", "test", "test", "test"],
+      player: [],
+      word: ["test", "test", "test", "test"],
       submit_code: [1, 2, 3],
       hint: [],
       green_token: 0,

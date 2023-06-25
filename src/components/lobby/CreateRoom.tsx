@@ -33,6 +33,7 @@ export default function CreateRoom() {
       roomName: roomNameRef.current.value,
       maxPlayer: maxPlayer,
       uid: "test",
+      nickname: "test",
     });
 
     const result = await push(dbRef, roomData);

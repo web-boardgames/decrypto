@@ -1,24 +1,16 @@
+import { RoomCardData } from "@/types/room.interface";
 import styled from "@emotion/styled";
 
-export default function Room({
-  id,
-  maxPlayer,
-}: {
-  id: string;
-  maxPlayer: number;
-}) {
-  const isPlaying = false;
-  const currentPeople = 2;
-
+export default function Room({ roomData }: { roomData: RoomCardData }) {
   return (
     <Container>
-      <Title>{id}</Title>
+      <Title>{roomData.name}</Title>
       <PlayingContainer>
-        <IsPlaying isPlaying={isPlaying} />
-        {isPlaying ? "playing" : "waiting"}
+        <IsPlaying isPlaying={roomData.isPlaying} />
+        {roomData.isPlaying ? "playing" : "waiting"}
       </PlayingContainer>
       <People>
-        {currentPeople} / {maxPlayer}
+        {roomData.people} / {roomData.maxPlayer}
       </People>
     </Container>
   );

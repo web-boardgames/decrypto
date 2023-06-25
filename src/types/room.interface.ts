@@ -1,5 +1,11 @@
+interface Player {
+  uid: string;
+  nickname: string;
+}
+
 interface Team {
-  words: string[];
+  player: Player[];
+  word: string[];
   submit_code: number[];
   hint: string[][];
   green_token: 0 | 1 | 2;
@@ -15,4 +21,11 @@ export interface Room {
   answer_code: number[];
   round: number;
   max_player: number;
+}
+
+export interface RoomCardData {
+  name: string;
+  maxPlayer: number;
+  isPlaying: boolean;
+  people: number;
 }

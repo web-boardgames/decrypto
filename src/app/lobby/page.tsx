@@ -6,23 +6,23 @@ import Navigation from "@/components/common/Navigation";
 import db from "@/config/firebase";
 import Room from "@/components/lobby/Room";
 import CreateRoom from "@/components/lobby/CreateRoom";
-
-type RoomData = {
-  name: string;
-  maxPlayer: number;
-};
+import { RoomCardData } from "@/types/room.interface";
 
 export default function Home() {
   const dbRef = ref(db, "/");
-  const [rooms, setRooms] = useState<RoomData[]>([]);
+  const [rooms, setRooms] = useState<RoomCardData[]>([]);
 
   useEffect(() => {
-    const unsubscribe = onValue(dbRef, (snapshot) => {
-      let tmpRooms: RoomData[] = [];
-      snapshot.forEach((childSnapshot) => {
+    const unsubscribe = onValue(dbRef, (rooms) => {
+      let tmpRooms: RoomCardData[] = [];
+      rooms.forEach((roomSnapshot) => {
         const roomData = {
-          name: childSnapshot.val().roomName as string,
-          maxPlayer: childSnapshot.val().max_player as number,
+          name: roomSnapshot.val()?.roomName as string,
+          maxPlayer: roomSnapshot.val()?.max_player as number,
+          isPlaying: roomSnapshot.val()?.is_playing as boolean,
+          people: (roomSnapshot.val()?.teamA?.player?.length ||
+            0 + roomSnapshot.val()?.teamB?.player?.length ||
+            0) as number,
         };
         tmpRooms.push(roomData);
       });
@@ -37,8 +37,8 @@ export default function Home() {
       <Main>
         <CreateRoom />
         <RoomsContainer>
-          {rooms.map((room, index) => (
-            <Room key={index} id={room.name} maxPlayer={room.maxPlayer} />
+          {rooms.map((roomData, index) => (
+            <Room key={index} roomData={roomData} />
           ))}
         </RoomsContainer>
       </Main>
