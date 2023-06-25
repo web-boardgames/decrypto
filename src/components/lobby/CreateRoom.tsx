@@ -33,7 +33,7 @@ export default function CreateRoom() {
       roomName: roomNameRef.current.value,
       maxPlayer: maxPlayer,
       id: user.id,
-      nickname: user.id,
+      nickname: user.nickname,
     });
     const result = await pushRoom(roomData);
     router.push("/room/" + result.key);

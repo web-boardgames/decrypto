@@ -1,12 +1,12 @@
 import { selector } from "recoil";
-import { userIdState, userNameState } from "../atoms";
 import { roomState } from "../atoms/roomState";
+import { userIdState, userNicknameState } from "../atoms";
 
 export const userSelector = selector({
   key: "userSelector",
   get: ({ get }) => {
     const id = get(userIdState);
-    const name = get(userNameState);
+    const nickname = get(userNicknameState);
     const room = get(roomState);
 
     const isCaptain = room?.captainID === id;
@@ -16,7 +16,7 @@ export const userSelector = selector({
 
     return {
       id,
-      name,
+      nickname,
       isCaptain,
       team,
     };

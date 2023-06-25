@@ -22,7 +22,7 @@ export interface Room {
 
 export interface RoomCardData {
   key: string;
-  name: string;
+  roomName: string;
   maxPlayer: number;
   isPlaying: boolean;
   people: number;

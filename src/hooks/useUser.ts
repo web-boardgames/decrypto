@@ -1,4 +1,4 @@
-import { userIdState, userNameState } from "@/recoil/atoms";
+import { userIdState, userNicknameState } from "@/recoil/atoms";
 import { userSelector } from "@/recoil/selectors";
 import { useCallback } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
@@ -7,21 +7,21 @@ import { v4 as uuidV4 } from "uuid";
 export const useUser = () => {
   const user = useRecoilValue(userSelector);
   const [userId, setUserId] = useRecoilState(userIdState);
-  const setUserName = useSetRecoilState(userNameState);
+  const setUserNickname = useSetRecoilState(userNicknameState);
 
-  const setName = useCallback(
+  const setNickname = useCallback(
     (name: string) => {
       if (userId === "") {
         setUserId(uuidV4());
       }
-      setUserName(name);
+      setUserNickname(name);
     },
-    [setUserId, setUserName, userId]
+    [setUserId, setUserNickname, userId]
   );
 
   const resetUser = useCallback(() => {
-    setUserName("");
-  }, [setUserName]);
+    setUserNickname("");
+  }, [setUserNickname]);
 
-  return { user, setName, resetUser };
+  return { user, setNickname, resetUser };
 };

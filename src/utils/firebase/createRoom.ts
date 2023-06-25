@@ -2,7 +2,6 @@ import { fireStore } from "@/config/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { getRandomNumbers } from "../getRandomNumbers";
 
-// TODO: replace test to real data
 export const createRoom = async ({
   roomName,
   maxPlayer,

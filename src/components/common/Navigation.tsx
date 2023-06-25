@@ -7,7 +7,7 @@ export default function Navigation() {
   const { user } = useUser();
 
   const onLogo = () => {
-    if (user.name) {
+    if (user.nickname) {
       router.push(`/lobby`);
     } else {
       router.push(`/`);
@@ -17,7 +17,7 @@ export default function Navigation() {
   return (
     <Container>
       <Logo onClick={onLogo}>Decrypto</Logo>
-      <Name>{user.name}</Name>
+      <Name>{user.nickname}</Name>
     </Container>
   );
 }

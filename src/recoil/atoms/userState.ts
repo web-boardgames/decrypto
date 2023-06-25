@@ -26,8 +26,8 @@ export const userIdState = atom({
   effects: [localStorageEffect<string>("userId")],
 });
 
-export const userNameState = atom({
-  key: "userNameState",
+export const userNicknameState = atom({
+  key: "userNicknameState",
   default: "",
-  effects: [localStorageEffect<string>("userName")],
+  effects: [localStorageEffect<string>("userNickname")],
 });
