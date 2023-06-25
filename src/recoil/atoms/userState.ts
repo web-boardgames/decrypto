@@ -1,8 +1,9 @@
+import { isServer } from "@/utils/isServer";
 import { AtomEffect, atom } from "recoil";
 
 // FIXME: type any
 
-const store = typeof window !== "undefined" ? window.localStorage : null;
+const store = isServer() ? window.localStorage : null;
 
 const localStorageEffect: <T>(key: string) => AtomEffect<T> =
   (key: string) =>
