@@ -13,7 +13,7 @@ export interface Room {
   roomName: string;
   teamA: Team;
   teamB: Team;
-  captainUID: string;
+  captainID: string;
   isPlaying: boolean;
   answer_code: number[];
   round: number;
@@ -21,6 +21,7 @@ export interface Room {
 }
 
 export interface RoomCardData {
+  key: string;
   name: string;
   maxPlayer: number;
   isPlaying: boolean;
