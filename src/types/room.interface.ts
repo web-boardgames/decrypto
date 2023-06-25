@@ -1,7 +1,4 @@
-interface Player {
-  uid: string;
-  nickname: string;
-}
+import { Player } from "./player.interface";
 
 interface Team {
   player: Player[];
