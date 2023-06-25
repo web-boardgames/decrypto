@@ -1,8 +1,18 @@
 import { atom } from "recoil";
 
+// FIXME: type any
+
 const localStorageEffect =
   (key: string) =>
-  ({ setSelf, onSet }) => {
+  ({
+    setSelf,
+    onSet,
+  }: {
+    setSelf: (value: any) => void;
+    onSet: (
+      callback: (newValue: any, oldValue: any, isReset: boolean) => void
+    ) => void;
+  }) => {
     const savedValue = localStorage.getItem(key);
     if (savedValue != null) {
       setSelf(JSON.parse(savedValue));
