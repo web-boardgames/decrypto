@@ -10,15 +10,15 @@ export const ExitGuard = ({ children }: { children: ReactNode }) => {
   const roomKey = params.slug;
   const dbRef = ref(db, "/" + roomKey);
 
-  useEffect(() => {
-    return () => {
-      remove(dbRef);
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     remove(dbRef);
+  //   };
+  // }, []);
 
-  useBeforeUnLoad(() => {
-    remove(dbRef);
-  });
+  // useBeforeUnLoad(() => {
+  //   remove(dbRef);
+  // });
 
   return <>{children}</>;
 };
