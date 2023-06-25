@@ -1,10 +1,8 @@
+"use client";
+
 import "@/styles/normalize.css";
 import localFont from "next/font/local";
-
-export const metadata = {
-  title: "decrypto",
-  description: "boardgame decrypto in web",
-};
+import { RecoilRoot } from "recoil";
 
 const neodgm = localFont({
   src: "./neodgm.woff2",
@@ -18,7 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={neodgm.className}>
-      <body>{children}</body>
+      <RecoilRoot>
+        <body>{children}</body>
+      </RecoilRoot>
     </html>
   );
 }

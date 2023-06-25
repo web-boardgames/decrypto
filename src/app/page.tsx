@@ -3,17 +3,19 @@ import { FormEvent, useRef } from "react";
 import { useRouter } from "next/navigation";
 import styled from "@emotion/styled";
 import Title from "@/components/rendering-page/Title";
+import { useUser } from "@/hooks/useUser";
 
 export default function Home() {
   const nameRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const user = useUser();
 
   const onEnterRoom = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (nameRef.current) {
       const name = nameRef.current.value;
       if (name) {
-        localStorage.setItem("name", name);
+        user.setName(name);
         router.push(`/lobby`);
       }
     }

@@ -1,13 +1,13 @@
-import { useRouter } from "next/navigation";
+import { useUser } from "@/hooks/useUser";
 import styled from "@emotion/styled";
-import { useName } from "@/hooks/useName";
+import { useRouter } from "next/navigation";
 
 export default function Navigation() {
   const router = useRouter();
-  const name = useName();
+  const { user } = useUser();
 
   const onLogo = () => {
-    if (name) {
+    if (user.name) {
       router.push(`/lobby`);
     } else {
       router.push(`/`);
@@ -17,7 +17,7 @@ export default function Navigation() {
   return (
     <Container>
       <Logo onClick={onLogo}>Decrypto</Logo>
-      <Name>{name}</Name>
+      <Name>{user.name}</Name>
     </Container>
   );
 }
