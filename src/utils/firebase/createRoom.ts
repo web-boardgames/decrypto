@@ -1,7 +1,9 @@
-import { Room } from "@/types/room.interface";
+import { fireStore } from "@/config/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { getRandomNumbers } from "../getRandomNumbers";
 
 // TODO: replace test to real data
-export const createRoom = ({
+export const createRoom = async ({
   roomName,
   maxPlayer,
   uid,
@@ -11,12 +13,20 @@ export const createRoom = ({
   maxPlayer: number;
   uid: string;
   nickname: string;
-}): Room => {
+}) => {
+  const words = (await getDoc(doc(fireStore, "korean_words", "nouns"))).data()
+    ?.words;
+  if (!words) {
+    throw new Error("words is not exist");
+  }
+  const randomNumbers = getRandomNumbers(8, words.length);
+  const wordList = randomNumbers.map((num) => words[num]);
+
   return {
     roomName,
     teamA: {
       player: [{ uid, nickname }],
-      word: ["test", "test", "test", "test"],
+      word: [...wordList.slice(0, 4)],
       submit_code: [1, 2, 3],
       hint: [],
       green_token: 0,
@@ -24,7 +34,7 @@ export const createRoom = ({
     },
     teamB: {
       player: [],
-      word: ["test", "test", "test", "test"],
+      word: [...wordList.slice(4, 8)],
       submit_code: [1, 2, 3],
       hint: [],
       green_token: 0,
