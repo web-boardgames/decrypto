@@ -1,4 +1,4 @@
-import { Player } from "./player.interface";
+import type { Player } from "./player.interface";
 
 interface Team {
   player: Player[];
